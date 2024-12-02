@@ -1,42 +1,91 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+ .main-color {
+     color: #4461F2 !important;
+ }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+ .main-button {
+     background: #4461F2 !important;
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+ }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+ .mainframe {
+     background-color: #F0F4FC;
+     border-radius: 0px 100px 100px 0px;
+     box-shadow: 0px 5px 100px 0px #0000001A;
+     padding: 80px 0px 80px 80px;
+ }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+ .register-shadow {
+     box-shadow: 0px 10px 30px 0px #4461F20D;
+     transition: 0.5s;
+ }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+ .register-shadow:hover {
+     background-color: #4461F2;
+     color: white !important;
+ }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
+ .continue-line {
+     position: relative;
+     color: #6C737F;
+ }
+
+ .continue-line p::after {
+     content: '';
+     width: 32%;
+     height: 1px;
+     background-color: #E7E7E7;
+     position: absolute;
+     top: 35%;
+     right: 0;
+
+ }
+
+ .continue-line p::before {
+     content: '';
+     width: 32%;
+     height: 1px;
+     background-color: #E7E7E7;
+     position: absolute;
+     top: 35%;
+     left: 0;
+ }
+
+
+ .icons {
+     color: #1D9BF0;
+     width: 65px;
+     height: 64px;
+     border: 1.02px solid #E0E0E9;
+     box-shadow: 0px 18px 30px 0px #4461F21C;
+     border-radius: 15px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .facebook {
+     color: #1877F2;
+ }
+
+ .apple {
+     color: black;
+ }
+
+ .input-shadow {
+     box-shadow: 0px 10.09px 20.18px 0px #4461F20D;
+     background: #F9F9F9 !important;
+
+ }
+
+ .input-shadow::placeholder {
+     color: #A1A4A9 !important;
+ }
+
+ .show-password {
+     color: #A1A4A9
+ }
+
+
+ .cursor-pointer {
+     cursor: pointer;
+ }
