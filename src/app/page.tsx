@@ -9,7 +9,7 @@ export default async function Home() {
 
   const session = await getServerSession(options);
   console.log("session", session);
-  if (!session) redirect("/login")
+  // if (!session) redirect("/login")
   return (
     <h1>
       hello

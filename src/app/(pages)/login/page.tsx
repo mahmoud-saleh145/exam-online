@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link';
-import MainImg from './../../(components)/mainImg/MainImg';
+import MainImg from '../../(components)/mainImg/MainImg';
 import { FcGoogle } from "react-icons/fc";
 import { FaTwitter } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
@@ -10,17 +10,22 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import * as yup from 'yup';
 import { signIn } from 'next-auth/react';
 import { useFormik } from 'formik'
-
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 
 export default function login() {
+    const router = useRouter();
 
-
+    let [show, setShow] = useState(false)
+    const showPassword = () => {
+        setShow(!show)
+    }
 
     let validationSchema = yup.object({
         email: yup.string().email().required(),
-        password: yup.string().required().matches(/^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/,),
+        password: yup.string().required(),
     });
 
     let formik = useFormik({
@@ -29,16 +34,16 @@ export default function login() {
             password: '',
         },
         validationSchema,
-        onSubmit: function (values) {
+        onSubmit: async function (values) {
             let user = signIn("credentials", {
                 email: values.email,
                 password: values.password,
-                redirect: true,
                 callbackUrl: "/",
             });
         },
-
     });
+
+
 
     return (
         <div className='container-flued '>
@@ -57,21 +62,26 @@ export default function login() {
                         <div className="w-75 px-4 m-auto ">
                             <h6 className='fs-5 fw-bolder'>Sign In</h6>
                             <form onSubmit={formik.handleSubmit} method="post" action="/api/auth/signin/email">
+                                <div className="position-relative pb-4">
+                                    <input
+                                        autoComplete="off"
+                                        value={formik.values.email}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur} type="email" name='email' className={`form-control input-shadow p-2  ${formik.touched.email && formik.values.email == '' ? "border-danger " : ""}`} placeholder='Enter Email' />
 
-                                <input autoComplete="off"
-                                    value={formik.values.email}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur} type="email" name='email' className={`form-control input-shadow p-2 my-3 ${formik.touched.email && formik.values.email == '' || formik.errors.email ? "border-danger" : ""}`} placeholder='Enter Email' />
 
+                                    {formik.errors.email && formik.touched.email && (<div className="alert alert-danger py-0 position-absolute">{formik.errors.email}</div>)}
+                                </div>
+                                <div className="position-relative py-2">
 
-
-                                <div className=" position-relative">
-                                    <input autoComplete="off"
+                                    <input
+                                        autoComplete="off"
                                         value={formik.values.password}
                                         onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur} type="password" name='password' className={`form-control input-shadow p-2 my-3 ${formik.touched.password && formik.values.password == '' || formik.errors.password ? "border-danger" : ''}`} placeholder='Enter Password' />
+                                        onBlur={formik.handleBlur} type={show ? "" : "password"} name='password' className={`form-control input-shadow p-2  ${formik.touched.password && formik.values.password == '' ? "border-danger" : ''}`} placeholder='Enter Password' />
+                                    <div className='position-absolute top-50 end-0 translate-middle show-password cursor-pointer ' onClick={showPassword}><VscEye /></div>
 
-                                    <div className='position-absolute top-50 end-0 translate-middle show-password '><VscEye /></div>
+                                    {formik.errors.password && formik.touched.password && (<div className="alert alert-danger py-0 position-absolute">{formik.errors.password}</div>)}
                                 </div>
                                 <div className="d-flex justify-content-end ">
                                     <Link href={'/forgetPassword'} className='main-color link-underline link-underline-opacity-0 '>Recover password?</Link>

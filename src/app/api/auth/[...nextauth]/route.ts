@@ -6,8 +6,19 @@ import TwitterProvider from "next-auth/providers/twitter";
 import FacebookProvider from "next-auth/providers/facebook";
 export const options: NextAuthOptions = {
     pages: {
-        signIn: '/login',
-        newUser: '/register'
+        signIn: '/login'
+    },
+    session: {
+        strategy: "jwt"
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            console.log("user data", user);
+            return { ...token, ...user }
+        },
+        async session({ session, token }) {
+            return { ...session, ...token }
+        }
     },
     providers: [
         GithubProvider({
@@ -30,27 +41,25 @@ export const options: NextAuthOptions = {
         CredentialsProvider({
             async authorize(credentials, req) {
                 const res = await fetch('https://exam.elevateegy.com/api/v1/auth/signin', {
-                    body: JSON.stringify(
-                        credentials
+                    body: JSON.stringify({
+                        email: credentials?.email,
+                        password: credentials?.password
+                    }
                     ),
                     headers: { "Content-Type": "application/json" },
                     method: 'POST'
                 })
                 const result = await res.json()
 
-                console.log("res", credentials);
+                // console.log("res", result);
 
 
-                if (result) {
 
-                    console.log(result);
-
+                if (result?.user?.email === credentials?.email) {
                     return result
                 }
                 return null
             },
-
-
             credentials: {
                 email: {
                 },

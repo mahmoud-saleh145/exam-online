@@ -1,5 +1,6 @@
+'use client'
 import Link from 'next/link';
-import MainImg from './../../(components)/mainImg/MainImg';
+import MainImg from '../../(components)/mainImg/MainImg';
 import { FcGoogle } from "react-icons/fc";
 import { FaTwitter } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
@@ -9,17 +10,13 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { signIn } from 'next-auth/react';
 import * as yup from 'yup';
 import { useFormik } from 'formik'
-import axios from 'axios';
-
-import { redirect } from 'next/navigation';
-export default function newPassword() {
-
-
-
-
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+export default function NewPassword() {
+    const router = useRouter();
     let validationSchema = yup.object({
         email: yup.string().email().required(),
-        newPassword: yup.string().required().matches(/^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z]{8,}$/,),
+        newPassword: yup.string().required(),
     });
 
     let formik = useFormik({
@@ -29,22 +26,28 @@ export default function newPassword() {
         },
         validationSchema,
         onSubmit: async function (values) {
-            let result = await axios.put("https://exam.elevateegy.com/api/v1/auth/resetPassword", values)
-                .catch((err) => {
-                    console.log(err);
-                })
-            if (result) redirect('/login')
+            const res = await fetch('https://exam.elevateegy.com/api/v1/auth/resetPassword', {
+                body: JSON.stringify(
+                    values
+                ),
+                headers: { "Content-Type": "application/json" },
+                method: 'PUT'
+            })
+            const result = await res.json()
 
             console.log(result);
 
-
+            if (result?.message == 'success') {
+                router.push('/login')
+            }
         }
 
     });
 
-
-
-
+    const [show, setShow] = useState(false)
+    const showPassword = () => {
+        setShow(!show)
+    }
 
     return (
 
@@ -64,23 +67,26 @@ export default function newPassword() {
                         <div className="w-75 px-4 m-auto ">
                             <h6 className='fs-5 fw-bolder'>Set a Password</h6>
                             <form onSubmit={formik.handleSubmit} method="put" >
-                                <div className=" position-relative">
+                                <div className="position-relative pb-4">
                                     <input
                                         autoComplete="off"
                                         value={formik.values.email}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        name='email' type="email" className={`form-control input-shadow p-2 my-3 ${formik.touched.email && formik.values.email == '' || formik.errors.email ? "border-danger" : ""}`} placeholder='Create a Password' ></input>
-                                    <div className='position-absolute top-50 end-0 translate-middle show-password '><VscEye /></div>
+                                        name='email' type="email" className={`form-control input-shadow p-2  ${formik.touched.email && formik.values.email == '' || formik.errors.email ? "border-danger" : ""}`} placeholder='Enter Your Email' ></input>
+                                    {formik.errors.email && formik.touched.email && (<div className="alert alert-danger py-0 position-absolute">{formik.errors.email}</div>)}
                                 </div>
-                                <div className=" position-relative">
+
+                                <div className=" position-relative py-2">
                                     <input
                                         autoComplete="off"
                                         value={formik.values.newPassword}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
-                                        name='newPassword' type="password" className={`form-control input-shadow p-2 my-3 ${formik.touched.newPassword && formik.values.newPassword == '' || formik.errors.newPassword ? "border-danger" : ""}`} placeholder='Re-Enter Password' ></input>
-                                    <div className='position-absolute top-50 end-0 translate-middle show-password'><VscEye /></div>
+                                        name='newPassword' type={show ? "" : "password"} className={`form-control input-shadow p-2  ${formik.touched.newPassword && formik.values.newPassword == '' || formik.errors.newPassword ? "border-danger" : ""}`} placeholder='Create a Password' ></input>
+                                    <div className='position-absolute top-50 end-0 translate-middle show-password cursor-pointer' onClick={showPassword}><VscEye /></div>
+                                    {formik.errors.newPassword && formik.touched.newPassword && (<div className="alert alert-danger py-0 position-absolute">{formik.errors.newPassword}</div>)}
+
                                 </div>
                                 <button type='submit' className='btn btn-primary w-100 my-5 rounded-4 py-2 main-button ' >Sign in</button>
                             </form>
@@ -88,10 +94,10 @@ export default function newPassword() {
                                 <p className=''>Or Continue with</p>
                             </div>
                             <div className='d-flex justify-content-between mt-3 '>
-                                <div onClick={() => signIn("google", { callbackUrl: '/', redirect: true, })} className='fs-2 icons'><FcGoogle /></div>
-                                <div onClick={() => signIn("facebook", { callbackUrl: '/', redirect: true, })} className='fs-2 icons facebook'><FaFacebook /></div>
-                                <div className='fs-2 icons'><FaTwitter /></div>
-                                <div className='fs-2 icons apple'><FaApple /></div>
+                                <div onClick={() => signIn("google", { callbackUrl: '/', redirect: true, })} className='fs-2 icons cursor-pointer'><FcGoogle /></div>
+                                <div onClick={() => signIn("facebook", { callbackUrl: '/', redirect: true, })} className='fs-2 icons facebook cursor-pointer'><FaFacebook /></div>
+                                <div className='fs-2 icons cursor-pointer'><FaTwitter /></div>
+                                <div className='fs-2 icons apple cursor-pointer'><FaApple /></div>
                             </div>
                         </div>
                     </div>
