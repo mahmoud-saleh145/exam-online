@@ -159,14 +159,15 @@ export default function register() {
                                 <p className=''>Or Continue with</p>
                             </div>
                             <div className='d-flex justify-content-between my-3 '>
-                                <div onClick={() => signIn("google", { callbackUrl: '/', redirect: true, })} className='fs-2 icons'><FcGoogle /></div>
-                                <div onClick={() => signIn("facebook", { callbackUrl: '/', redirect: true, })} className='fs-2 icons facebook'><FaFacebook /></div>
-                                <div className='fs-2 icons'><FaTwitter /></div>
-                                <div className='fs-2 icons apple'><FaApple /></div>
+                                <div onClick={() => signIn("google", { callbackUrl: '/', redirect: true, })} className='fs-2 icons  cursor-pointer'><FcGoogle /></div>
+                                <div onClick={() => signIn("facebook", { callbackUrl: '/', redirect: true, })} className='fs-2 icons facebook cursor-pointer'><FaFacebook /></div>
+                                <div className='fs-2 icons cursor-pointer'><FaTwitter /></div>
+                                <div className='fs-2 icons apple cursor-pointer'><FaApple /></div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 

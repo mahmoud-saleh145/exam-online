@@ -77,8 +77,15 @@
 
  }
 
+ .input-shadow {
+     box-shadow: 0px 10.09px 20.18px 0px #4461F20D;
+     background: #F9F9F9 !important;
+
+ }
+
  .input-shadow::placeholder {
      color: #A1A4A9 !important;
+
  }
 
  .show-password {
@@ -88,4 +95,88 @@
 
  .cursor-pointer {
      cursor: pointer;
+ }
+
+
+ .bg-home {
+     background-color: #fbf9f9;
+     min-height: 100vh;
+ }
+
+ .second-color {
+     color: #696F79 !important;
+ }
+
+ .logOutButton:hover {
+     background-color: #4461F2 !important;
+     color: white !important;
+ }
+
+ .logOutButton:hover .logoutIcon {
+     color: white !important;
+ }
+
+
+ .search-shadow {
+
+     border-radius: 0px 15px 15px 0px !important;
+
+
+ }
+
+ .search-icon {
+
+     height: 36px;
+
+
+ }
+
+ .input-group {
+     box-shadow: 0px 15px 40px 0px #0000001A;
+     background-color: white;
+     border-radius: 15px;
+ }
+
+ .search-shadow::placeholder {
+     color: #696F79 !important;
+
+ }
+
+ .quizes-shadow {
+     box-shadow: 0px 15px 40px 0px #0000000D;
+ }
+
+ .title {
+     background: #1100FF66;
+     backdrop-filter: blur(27.01353645324707px);
+     border-radius: 10px;
+     bottom: 27px;
+     right: 45px;
+ }
+
+ .question-font {
+     color: #535353;
+ }
+
+ .ExamQuestions-layout {
+     background-color: rgba(0, 0, 0, 0.27);
+ }
+
+
+ .question-layout {
+     box-shadow: 0px 1px 10px 0px #00000040;
+     min-width: 500px;
+ }
+
+ .back-button {
+     border-color: #4461F2 !important;
+ }
+
+ .answer-background {
+     background: #EDEFF3;
+ }
+
+ .answer-background-checked {
+     background: #CCD7EB;
+
  }

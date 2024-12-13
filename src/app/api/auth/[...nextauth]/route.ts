@@ -6,18 +6,20 @@ import TwitterProvider from "next-auth/providers/twitter";
 import FacebookProvider from "next-auth/providers/facebook";
 export const options: NextAuthOptions = {
     pages: {
-        signIn: '/login'
+        signIn: '/login',
+        signOut: '/auth/signout',
     },
     session: {
         strategy: "jwt"
     },
     callbacks: {
         async jwt({ token, user }) {
-            console.log("user data", user);
             return { ...token, ...user }
         },
-        async session({ session, token }) {
-            return { ...session, ...token }
+        async session({ session, token, user }) {
+
+
+            return { ...session, ...token, ...user }
         }
     },
     providers: [

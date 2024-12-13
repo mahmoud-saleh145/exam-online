@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css"
+import AuthProvider from "@/context/AuthProvider";
 
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
