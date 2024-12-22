@@ -1,15 +1,36 @@
 'use client'
 import axios from "axios"
 import { useEffect, useState } from "react"
-import ExamQuestions from "../ExamQuestions/ExamQuestions"
+import ExamQuestions from "../../(components)/ExamQuestions/ExamQuestions"
 
-export default function Quiz(props: any) {
-    const exams = props.exam
-    const token = props.token
+
+export default function ExamList(props) {
+    const id = props.id
+    const token = props.token.token
+
+
 
     const [questionsMessage, setQuestionsMessage] = useState('')
     const [questionsData, setQuestionsData] = useState([])
-    async function getExamQuestions(id: any) {
+    const [exams, setExams] = useState([])
+
+
+    async function getExams() {
+        const userToken = await token
+        let headers = {
+            token: userToken
+        }
+        const res = await axios.get(`https://exam.elevateegy.com/api/v1/exams?subject=${id}`,
+            { headers },
+
+        ).then((response) => response)
+            .catch((err) => err)
+        setExams(res.data.exams)
+        // console.log(res.data.exams)
+    }
+
+
+    async function getExamQuestions(id) {
         const userToken = await token
         let headers = {
             token: userToken
@@ -19,26 +40,23 @@ export default function Quiz(props: any) {
 
         ).then((response) => response)
             .catch((err) => err)
-        console.log(res.data);
+        // console.log(res.data);
 
         setQuestionsMessage(res.data.message)
         setQuestionsData(res.data)
 
 
     }
-    // if (questionsMessage == 'success') {
-    //     return (
-    //         <ExamQuestions data={questionsData} />
-    //     )
-    // }
 
-
+    useEffect(() => {
+        getExams()
+    }, [])
 
     return (
         <>
             {questionsMessage !== 'success' ?
                 <div className="row  ">
-                    {exams.exams.map((exam: any) => (
+                    {exams.map((exam) => (
                         <div key={exam._id}>
                             <p className=" fs-6 fw-semibold">{exam.title}</p>
                             <div className="col-md-12 me-5 bg-white p-4 rounded-4 quizes-shadow d-flex justify-content-between mb-3">

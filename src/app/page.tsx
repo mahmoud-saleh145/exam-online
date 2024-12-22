@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth";
-import styles from "./page.module.css";
 import { options } from "./api/auth/[...nextauth]/route";
 import SideMenu from "./(components)/sideMenu/SideMenu";
 import img from "./public/Frame 40.png"
@@ -19,7 +18,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="container-flued p-3 bg-home ">
+      <div className="container-flued p-3  bg-home  ">
         <div className="row ">
           <div className="col-md-2 p-4">
             <SideMenu />
@@ -32,19 +31,14 @@ export default async function Home() {
                   <input type="text" className="form-control search-shadow py-2  border-0" placeholder="Search Quiz" />
                 </div>
               </div>
-              <div className="col-md-2">
-                <button className='btn text-white main-button py-2 w-100 fw-semibold rounded-4 '>Start Quiz</button>
+              <div className="col-md-2 col-0">
+                <button className='btn text-white main-button py-2 w-100 fw-semibold rounded-4  '>Start Quiz</button>
               </div>
-              <div className="col-md-1">
+              <div className="col-md-1  ">
                 <Image src={img} alt="main image" style={{ maxWidth: '47px', maxHeight: '47px' }} className="rounded-circle" />
               </div>
             </div>
-
-
             <QuizList token={userToken} />
-
-
-
           </div>
         </div>
       </div>

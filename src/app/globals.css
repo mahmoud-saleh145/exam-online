@@ -152,6 +152,7 @@
      border-radius: 10px;
      bottom: 27px;
      right: 45px;
+
  }
 
  .question-font {
@@ -178,5 +179,27 @@
 
  .answer-background-checked {
      background: #CCD7EB;
+
+ }
+
+ .progress-bar {
+     background-color: #4461F2 !important;
+ }
+
+ .user-details {}
+
+ .user-icons {
+     color: #4461F2;
+     width: 60px;
+     height: 60px;
+     box-shadow: 0px 15px 40px 5px #EDEDED;
+     border-radius: 10px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .p-quiz {
+     color: #696F79;
 
  }
